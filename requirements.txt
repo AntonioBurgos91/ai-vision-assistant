@@ -1,0 +1,30 @@
+# Dependencias para el Asistente de IA con Control de Aplicaciones
+
+# Integración con Claude AI
+anthropic>=0.39.0
+
+# Captura de pantalla y visión
+Pillow>=10.0.0
+mss>=9.0.0
+opencv-python>=4.8.0
+
+# Automatización de GUI
+pyautogui>=0.9.54
+pygetwindow>=0.0.9
+pywinauto>=0.6.8
+
+# Control de ventanas en Windows
+pywin32>=306; sys_platform == 'win32'
+
+# Utilidades
+python-dotenv>=1.0.0
+colorama>=0.4.6
+pynput>=1.7.6
+keyboard>=0.13.5
+
+# OCR (opcional, para leer texto en pantalla)
+pytesseract>=0.3.10
+
+# Web Interface (Flask)
+Flask>=3.0.0
+Flask-CORS>=4.0.0

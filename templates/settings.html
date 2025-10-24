@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración - Asistente de IA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1><i class="fas fa-cog"></i> Configuración</h1>
+                <div class="header-actions">
+                    <a href="/" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Estado del Sistema -->
+            <section class="card">
+                <h2><i class="fas fa-info-circle"></i> Estado del Sistema</h2>
+
+                <div class="status-grid">
+                    <div class="status-item">
+                        <div class="status-label">API Key</div>
+                        <div class="status-value" id="apiKeyStatus">
+                            <span class="badge badge-warning">No configurado</span>
+                        </div>
+                    </div>
+
+                    <div class="status-item">
+                        <div class="status-label">IA Habilitada</div>
+                        <div class="status-value" id="aiStatus">
+                            <span class="badge badge-danger">Deshabilitada</span>
+                        </div>
+                    </div>
+
+                    <div class="status-item">
+                        <div class="status-label">Modelo IA</div>
+                        <div class="status-value" id="modelStatus">-</div>
+                    </div>
+
+                    <div class="status-item">
+                        <div class="status-label">Resolución de Pantalla</div>
+                        <div class="status-value" id="screenResolution">-</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Configuración de API Key -->
+            <section class="card">
+                <h2><i class="fas fa-key"></i> API Key de Anthropic</h2>
+                <p class="section-description">
+                    Configura tu API key de Anthropic (Claude) para habilitar las funcionalidades de IA.
+                </p>
+
+                <div class="info-box info-box-info">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>¿Dónde obtengo mi API key?</strong>
+                        <p>Visita <a href="https://console.anthropic.com/" target="_blank">console.anthropic.com</a> y crea una cuenta para obtener tu API key.</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="apiKeyInput">API Key:</label>
+                    <div class="input-group">
+                        <input
+                            type="password"
+                            id="apiKeyInput"
+                            class="input-field"
+                            placeholder="sk-ant-api03-..."
+                        />
+                        <button id="toggleApiKeyBtn" class="btn btn-secondary">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button id="saveApiKeyBtn" class="btn btn-primary btn-large">
+                    <i class="fas fa-save"></i> Guardar API Key
+                </button>
+
+                <div id="apiKeyResult" class="result-box" style="display: none; margin-top: 1rem;"></div>
+            </section>
+
+            <!-- Información y Ayuda -->
+            <section class="card">
+                <h2><i class="fas fa-question-circle"></i> Ayuda</h2>
+
+                <div class="help-section">
+                    <h3>¿Cómo usar la aplicación?</h3>
+                    <ol>
+                        <li>Configura tu API key de Anthropic arriba</li>
+                        <li>Vuelve a la página principal</li>
+                        <li>Da instrucciones en lenguaje natural al asistente</li>
+                        <li>Revisa el plan de acciones y confirma la ejecución</li>
+                    </ol>
+                </div>
+
+                <div class="help-section">
+                    <h3>Ejemplos de instrucciones:</h3>
+                    <ul>
+                        <li>"Abre el bloc de notas y escribe Hola Mundo"</li>
+                        <li>"Busca Python en Google"</li>
+                        <li>"Copia el texto seleccionado y pégalo en un nuevo archivo"</li>
+                        <li>"Toma una captura de pantalla y guárdala"</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h3>Características:</h3>
+                    <ul>
+                        <li><strong>Visión por computadora:</strong> La IA puede ver tu pantalla y entender el contexto</li>
+                        <li><strong>Automatización:</strong> Controla mouse, teclado y aplicaciones</li>
+                        <li><strong>Seguridad:</strong> Revisas todas las acciones antes de ejecutarlas</li>
+                        <li><strong>Flexible:</strong> Usa lenguaje natural para dar instrucciones</li>
+                    </ul>
+                </div>
+
+                <div class="info-box info-box-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <strong>Seguridad</strong>
+                        <p>La aplicación tiene acceso para controlar tu computadora. Revisa siempre las acciones antes de confirmar su ejecución.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Acciones del Sistema -->
+            <section class="card">
+                <h2><i class="fas fa-tools"></i> Acciones del Sistema</h2>
+
+                <div class="button-group">
+                    <button id="testConnectionBtn" class="btn btn-secondary">
+                        <i class="fas fa-plug"></i> Probar Conexión
+                    </button>
+                    <button id="refreshStatusBtn" class="btn btn-secondary">
+                        <i class="fas fa-sync"></i> Actualizar Estado
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+</body>
+</html>

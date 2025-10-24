@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente de IA - Control de Aplicaciones</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1><i class="fas fa-robot"></i> Asistente de IA</h1>
+                <div class="header-actions">
+                    <div class="status-indicator" id="statusIndicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Conectando...</span>
+                    </div>
+                    <a href="/settings" class="btn btn-secondary">
+                        <i class="fas fa-cog"></i> Configuración
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Sección de Instrucciones -->
+            <section class="card instruction-section">
+                <h2><i class="fas fa-comments"></i> Dar Instrucción</h2>
+                <p class="section-description">
+                    Dale una instrucción en lenguaje natural al asistente y él generará las acciones necesarias.
+                </p>
+
+                <div class="instruction-input-group">
+                    <textarea
+                        id="instructionInput"
+                        class="instruction-textarea"
+                        placeholder="Ejemplo: 'Abre el bloc de notas y escribe Hola Mundo'"
+                        rows="3"
+                    ></textarea>
+                    <button id="executeInstructionBtn" class="btn btn-primary btn-large">
+                        <i class="fas fa-play"></i> Ejecutar Instrucción
+                    </button>
+                </div>
+
+                <!-- Resultado de la instrucción -->
+                <div id="instructionResult" class="result-box" style="display: none;">
+                    <h3>Plan de Ejecución</h3>
+                    <div id="instructionAnalysis" class="result-section"></div>
+                    <div id="instructionStrategy" class="result-section"></div>
+                    <div id="instructionActions" class="result-section"></div>
+                    <div id="instructionWarnings" class="result-section"></div>
+                    <div class="action-buttons">
+                        <button id="confirmExecutionBtn" class="btn btn-success">
+                            <i class="fas fa-check"></i> Confirmar y Ejecutar
+                        </button>
+                        <button id="cancelExecutionBtn" class="btn btn-danger">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Grid de Funcionalidades -->
+            <div class="features-grid">
+                <!-- Captura de Pantalla -->
+                <section class="card">
+                    <h2><i class="fas fa-camera"></i> Captura de Pantalla</h2>
+                    <p>Captura y analiza tu pantalla actual.</p>
+                    <div class="button-group">
+                        <button id="captureScreenBtn" class="btn btn-primary">
+                            <i class="fas fa-desktop"></i> Capturar
+                        </button>
+                        <button id="analyzeScreenBtn" class="btn btn-secondary">
+                            <i class="fas fa-search"></i> Analizar con IA
+                        </button>
+                    </div>
+                    <div id="screenPreview" class="image-preview"></div>
+                    <div id="analysisResult" class="result-box" style="display: none;"></div>
+                </section>
+
+                <!-- Ventanas Abiertas -->
+                <section class="card">
+                    <h2><i class="fas fa-window-restore"></i> Ventanas Abiertas</h2>
+                    <p>Lista y gestiona las aplicaciones abiertas.</p>
+                    <button id="refreshWindowsBtn" class="btn btn-primary">
+                        <i class="fas fa-sync"></i> Actualizar Lista
+                    </button>
+                    <div id="windowsList" class="windows-list"></div>
+                </section>
+
+                <!-- Buscar Elemento -->
+                <section class="card">
+                    <h2><i class="fas fa-crosshairs"></i> Buscar Elemento</h2>
+                    <p>Encuentra un elemento en la pantalla por descripción.</p>
+                    <input
+                        type="text"
+                        id="elementDescription"
+                        class="input-field"
+                        placeholder="Ej: botón de cerrar en la esquina"
+                    />
+                    <div class="button-group">
+                        <button id="findElementBtn" class="btn btn-primary">
+                            <i class="fas fa-search"></i> Buscar
+                        </button>
+                        <button id="clickElementBtn" class="btn btn-secondary" style="display: none;">
+                            <i class="fas fa-mouse-pointer"></i> Hacer Clic
+                        </button>
+                    </div>
+                    <div id="findElementResult" class="result-box" style="display: none;"></div>
+                </section>
+
+                <!-- Acciones Rápidas -->
+                <section class="card">
+                    <h2><i class="fas fa-bolt"></i> Acciones Rápidas</h2>
+                    <p>Ejecuta acciones comunes rápidamente.</p>
+
+                    <div class="quick-action-group">
+                        <label>Escribir Texto:</label>
+                        <input
+                            type="text"
+                            id="quickTypeText"
+                            class="input-field"
+                            placeholder="Texto a escribir"
+                        />
+                        <button id="quickTypeBtn" class="btn btn-sm btn-primary">
+                            <i class="fas fa-keyboard"></i> Escribir
+                        </button>
+                    </div>
+
+                    <div class="quick-action-group">
+                        <label>Posición del Mouse:</label>
+                        <div id="mousePosition" class="info-text">x: -, y: -</div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p id="loadingText">Procesando...</p>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
